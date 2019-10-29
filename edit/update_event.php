@@ -8,6 +8,7 @@ if(!(isset($_SESSION['login'])))
     exit;
 }
 require "../connection.php";
+require "../check.php";
 
 if($_POST['title'] == NULL || $_POST['desc'] == NULL)
 {
@@ -19,6 +20,9 @@ else
     $desc = htmlspecialchars($_POST['desc'], ENT_QUOTES);
     $id_event = htmlspecialchars($_POST['custId'], ENT_QUOTES);
 
+    // вызов функции проверки на антимат
+    $title = check_word($title);
+    $desc = check_word($desc);
 
     $temp = explode(".", $_FILES["img"]["name"]);
     $newfilename = round(microtime(true)) . '.' . end($temp);
